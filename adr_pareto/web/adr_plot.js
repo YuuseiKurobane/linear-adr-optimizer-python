@@ -28,9 +28,9 @@
     "Recommended",
     "Aggressive",
     "Calm",
-    "Max Spread",
     "Efficiency Potential",
     "Memory Potential",
+    "Max Spread",
     "Original"
   ];
 
@@ -670,6 +670,28 @@
     setStatus(statusText(figure));
   }
 
+  async function renderInitialSummary(source) {
+    const plot = document.getElementById("plot");
+    if (!plot || !window.ADR_INITIAL_SUMMARY) {
+      return false;
+    }
+    const input = document.getElementById("summary-path");
+    const label = source || window.ADR_INITIAL_SOURCE || "embedded summary";
+    if (input) {
+      input.value = label;
+    }
+    try {
+      setStatus("Loading...");
+      const figure = await render(plot, window.ADR_INITIAL_SUMMARY);
+      setTitle(window.ADR_INITIAL_SUMMARY, label);
+      setStatus(statusText(figure));
+      return true;
+    } catch (error) {
+      setStatus(error.message);
+      return true;
+    }
+  }
+
   function wirePreviewPage() {
     const plot = document.getElementById("plot");
     if (!plot) {
@@ -677,7 +699,7 @@
     }
 
     const params = new URLSearchParams(window.location.search);
-    const initialPath = params.get("summary") || DEFAULT_SUMMARY;
+    const initialPath = params.get("summary");
     const form = document.getElementById("summary-form");
     const fileInput = document.getElementById("summary-file");
 
@@ -710,7 +732,15 @@
       });
     }
 
-    loadAndRender(initialPath).catch((error) => setStatus(error.message));
+    if (initialPath) {
+      loadAndRender(initialPath).catch((error) => setStatus(error.message));
+      return;
+    }
+    renderInitialSummary(window.ADR_INITIAL_SOURCE).then((rendered) => {
+      if (!rendered) {
+        loadAndRender(DEFAULT_SUMMARY).catch((error) => setStatus(error.message));
+      }
+    });
   }
 
   window.AdrParetoPlot = {

@@ -96,9 +96,9 @@ def print_results(
         "Recommended",
         "Aggressive",
         "Calm",
-        "Max Spread",
         "Efficiency Potential",
         "Memory Potential",
+        "Max Spread",
         "Original",
     ):
         if label in selected_by_label:

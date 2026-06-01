@@ -13,7 +13,7 @@ from .ranking import format_dr_label, pareto_frontier
 from .safety import safety_pool
 
 
-PACKAGE_ROOT = Path(__file__).resolve().parents[1]
+PACKAGE_ROOT = Path(__file__).resolve().parent
 
 
 def label_text(
@@ -118,7 +118,7 @@ def write_plot_html(plot_path: Path, summary_path: Path) -> None:
     window.ADR_INITIAL_SOURCE = {source_json};
   </script>
   <script src="{web_root}/vendor/plotly-3.5.1.min.js"></script>
-  <script src="{web_root}/adr_plot.js?v=rewrite-1"></script>
+  <script src="{web_root}/adr_plot.js?v=embedded-summary-1"></script>
 </body>
 </html>
 """,
@@ -294,9 +294,9 @@ def _primary_label(labels: list[str]) -> str:
         "Recommended",
         "Aggressive",
         "Calm",
-        "Max Spread",
         "Efficiency Potential",
         "Memory Potential",
+        "Max Spread",
         "Original",
     ]
     for label in priority:
