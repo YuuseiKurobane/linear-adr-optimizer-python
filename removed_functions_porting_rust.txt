@@ -1,0 +1,56 @@
+Removed functions and behavior during the standalone Rust rewrite
+===============================================================
+
+Scope
+-----
+
+The source folders were inspected from:
+
+- `adr_pareto`
+- `rust`
+- `helper`
+- the proof-of-concept Anki add-on copy
+- `adr_plot_lab/web`
+
+The rewrite keeps only the simulator/search path needed to generate ADR Pareto points and point-only recommendations.
+
+Removed from the Rust side
+--------------------------
+
+- The PyO3 extension target and `srs_simulator_rs` Python module were not ported. The standalone rewrite should not require a native Python import inside Anki.
+- The old JSON stdin/stdout helper protocol was removed completely. This includes one-shot request ops such as `version`, `init_single`, `init_state`, `schedule_single`, `review`, `evaluate_many`, `safety_many`, and `dr_summary_many` as JSON messages.
+- The Anki scheduling helper ops (`init_single`, `init_state`, `schedule_single`, `review`) were not ported into the ADR optimizer worker because they are not part of the normal ADR parameter search workflow.
+- The old `Lib`/`simulated_annealing` public flow was not exposed. The normal ADR workflow uses staged linear candidate search, safety checks, fixed-DR curve comparison, final selection, and DR summaries.
+- `FSRSADRGenerator`, Gaussian ADR mutations, decision-plane mutations, and the nonlinear simulated annealing helper were deleted from the rewrite. The Rust ADR model now contains only the linear `flat + s * ln(stability) + d * difficulty` behavior used by the normal Pareto workflow.
+
+Replaced Rust behavior
+----------------------
+
+- Repeated helper launches and repeated JSON config transfer were replaced with one long-lived binary worker.
+- Candidate evaluation, safety checks, and DR summaries now fan out across multiple Rust worker threads by default.
+- The Rust executable now supports `--version`/`--help` for human inspection, but its normal mode is the binary worker used by Python.
+
+Removed from the Python side
+----------------------------
+
+- Direct `import srs_simulator_rs` backend usage was removed.
+- The proof-of-concept add-on's JSON subprocess client was not kept.
+- Plotting no longer imports Matplotlib unless `--matplotlib` is explicitly used.
+- Point-only modes skip plot HTML/PNG and summary JSON, writing only the requested TXT result.
+
+Kept in Python
+--------------
+
+- CLI parsing and old ADR search flags remain in Python so existing command-line workflows still work.
+- Staged search orchestration, ranking, selection, fixed-curve adaptation, summaries, and Plotly rendering remain in `Rewrite_adr_pareto`.
+- Summary JSON remains as an output artifact for Plotly rendering. This is not the removed helper request/response protocol.
+
+Copied web assets
+-----------------
+
+- `adr_plot_lab/web/index.html`
+- `adr_plot_lab/web/adr_plot.js`
+- `adr_plot_lab/web/adr_plot.css`
+- `adr_plot_lab/web/vendor/plotly-3.5.1.min.js`
+
+These now live in `Rewrite_adr_pareto/web` so a future Anki add-on can bundle the Plotly renderer without depending on the old repo.

@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+Rewrite_rust/target/
+Rewrite_adr_pareto/outputs/
+outputs/
+
+Rewrite_helper/

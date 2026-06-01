@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADR Pareto Plot</title>
+  <link rel="stylesheet" href="./adr_plot.css?v=selected-only-interaction-2">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="toolbar">
+      <div class="title-block">
+        <h1>ADR Pareto Plot</h1>
+        <p id="summary-title">Loading summary...</p>
+      </div>
+      <form id="summary-form" class="summary-form">
+        <input
+          id="summary-path"
+          name="summary"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Summary JSON path"
+        >
+        <button type="submit">Load</button>
+        <label class="file-button">
+          <span>Open JSON</span>
+          <input id="summary-file" type="file" accept="application/json,.json">
+        </label>
+      </form>
+    </header>
+    <section class="plot-panel">
+      <div class="plot-frame">
+        <div id="plot" class="plot" aria-label="ADR Pareto Plot"></div>
+        <aside id="result-box" class="result-box" aria-label="ADR plot labels"></aside>
+      </div>
+      <div id="status" class="status" role="status"></div>
+    </section>
+  </main>
+
+  <script src="./vendor/plotly-3.5.1.min.js"></script>
+  <script src="./adr_plot.js?v=fixed-dr-label-dedupe-1"></script>
+</body>
+</html>

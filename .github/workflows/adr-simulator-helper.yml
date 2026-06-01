@@ -1,0 +1,86 @@
+name: Build ADR Simulator Helper
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-helper:
+    name: ${{ matrix.artifact_name }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - artifact_name: adr-simulator-helper-windows-x86_64
+            archive_name: adr-simulator-helper-windows-x86_64.zip
+            binary_name: adr-simulator-helper.exe
+            runner: windows-latest
+          - artifact_name: adr-simulator-helper-linux-x86_64
+            archive_name: adr-simulator-helper-linux-x86_64.tar.gz
+            binary_name: adr-simulator-helper
+            runner: ubuntu-latest
+          - artifact_name: adr-simulator-helper-macos-aarch64
+            archive_name: adr-simulator-helper-macos-aarch64.tar.gz
+            binary_name: adr-simulator-helper
+            runner: macos-15
+          - artifact_name: adr-simulator-helper-macos-x86_64
+            archive_name: adr-simulator-helper-macos-x86_64.tar.gz
+            binary_name: adr-simulator-helper
+            runner: macos-15-intel
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+
+      - name: Show Rust target
+        run: rustc -vV
+
+      - name: Build helper
+        working-directory: Rewrite_rust
+        run: cargo build --release --bin adr-simulator-helper
+
+      - name: Smoke test helper
+        if: runner.os != 'Windows'
+        working-directory: Rewrite_rust
+        run: ./target/release/adr-simulator-helper --version
+
+      - name: Smoke test helper
+        if: runner.os == 'Windows'
+        working-directory: Rewrite_rust
+        shell: pwsh
+        run: .\target\release\adr-simulator-helper.exe --version
+
+      - name: Package helper
+        if: runner.os != 'Windows'
+        working-directory: Rewrite_rust
+        run: |
+          mkdir -p dist
+          cp "target/release/${{ matrix.binary_name }}" "dist/${{ matrix.binary_name }}"
+          chmod +x "dist/${{ matrix.binary_name }}"
+          tar -czf "../${{ matrix.archive_name }}" -C dist "${{ matrix.binary_name }}"
+
+      - name: Package helper
+        if: runner.os == 'Windows'
+        working-directory: Rewrite_rust
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist
+          Copy-Item "target\release\${{ matrix.binary_name }}" "dist\${{ matrix.binary_name }}"
+          Compress-Archive -Path "dist\${{ matrix.binary_name }}" -DestinationPath "..\${{ matrix.archive_name }}" -Force
+
+      - name: Upload helper artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.archive_name }}
+          if-no-files-found: error
