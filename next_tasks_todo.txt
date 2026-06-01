@@ -1,0 +1,5 @@
+# Next Tasks TODO
+
+- Replace `[TODO: INSERT ANKI ADD-ON LINK HERE]` in `README.md` once the Anki add-on URL is available.
+- Recreate or populate `helper/` from GitHub Actions artifacts when packaged helper binaries are needed.
+- Document the exact Anki export schema after the add-on workflow is finalized.

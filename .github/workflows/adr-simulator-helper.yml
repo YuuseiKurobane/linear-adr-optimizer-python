@@ -46,23 +46,23 @@ jobs:
         run: rustc -vV
 
       - name: Build helper
-        working-directory: Rewrite_rust
+        working-directory: rust
         run: cargo build --release --bin adr-simulator-helper
 
       - name: Smoke test helper
         if: runner.os != 'Windows'
-        working-directory: Rewrite_rust
+        working-directory: rust
         run: ./target/release/adr-simulator-helper --version
 
       - name: Smoke test helper
         if: runner.os == 'Windows'
-        working-directory: Rewrite_rust
+        working-directory: rust
         shell: pwsh
         run: .\target\release\adr-simulator-helper.exe --version
 
       - name: Package helper
         if: runner.os != 'Windows'
-        working-directory: Rewrite_rust
+        working-directory: rust
         run: |
           mkdir -p dist
           cp "target/release/${{ matrix.binary_name }}" "dist/${{ matrix.binary_name }}"
@@ -71,7 +71,7 @@ jobs:
 
       - name: Package helper
         if: runner.os == 'Windows'
-        working-directory: Rewrite_rust
+        working-directory: rust
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path dist

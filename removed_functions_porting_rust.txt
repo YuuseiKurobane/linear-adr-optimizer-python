@@ -42,7 +42,7 @@ Kept in Python
 --------------
 
 - CLI parsing and old ADR search flags remain in Python so existing command-line workflows still work.
-- Staged search orchestration, ranking, selection, fixed-curve adaptation, summaries, and Plotly rendering remain in `Rewrite_adr_pareto`.
+- Staged search orchestration, ranking, selection, fixed-curve adaptation, summaries, and Plotly rendering remain in `adr_pareto`.
 - Summary JSON remains as an output artifact for Plotly rendering. This is not the removed helper request/response protocol.
 
 Copied web assets
@@ -53,4 +53,4 @@ Copied web assets
 - `adr_plot_lab/web/adr_plot.css`
 - `adr_plot_lab/web/vendor/plotly-3.5.1.min.js`
 
-These now live in `Rewrite_adr_pareto/web` so a future Anki add-on can bundle the Plotly renderer without depending on the old repo.
+These now live in `adr_pareto/web` so a future Anki add-on can bundle the Plotly renderer without depending on the old repo.

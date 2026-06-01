@@ -15,7 +15,7 @@ from .config import SearchConfig
 from .models import Candidate, Point
 
 
-REWRITE_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 HELPER_ENV = "ADR_SIMULATOR_HELPER"
 
 CMD_CONFIGURE = 1
@@ -70,12 +70,12 @@ def resolve_helper_path() -> Path:
         artifact_dir = "adr-simulator-helper-linux-x86_64"
 
     candidates = [
-        REWRITE_ROOT / "Rewrite_rust" / "target" / "release" / exe,
-        REWRITE_ROOT / "Rewrite_rust" / "target" / "debug" / exe,
-        REWRITE_ROOT / "Rewrite_helper" / exe,
+        REPO_ROOT / "rust" / "target" / "release" / exe,
+        REPO_ROOT / "rust" / "target" / "debug" / exe,
+        REPO_ROOT / "helper" / exe,
     ]
     if artifact_dir is not None:
-        candidates.append(REWRITE_ROOT / "Rewrite_helper" / artifact_dir / exe)
+        candidates.append(REPO_ROOT / "helper" / artifact_dir / exe)
     for path in candidates:
         if path.exists():
             if os.name != "nt":
@@ -85,7 +85,7 @@ def resolve_helper_path() -> Path:
     searched = "\n".join(str(path) for path in candidates)
     raise RustBackendError(
         "No adr-simulator-helper binary found. Build it with:\n"
-        "  cd Rewrite_rust\n"
+        "  cd rust\n"
         "  cargo build --release --bin adr-simulator-helper\n"
         f"Or set {HELPER_ENV}. Searched:\n{searched}"
     )
