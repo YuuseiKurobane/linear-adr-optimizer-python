@@ -96,7 +96,7 @@ python -m adr_pareto --preset "Yuusei" --target-dr 85 --matplotlib
 - `--seed`: base seed for reproducible staged search.
 - `--threads`: Rust worker thread count. `0` uses all available CPU cores.
 - `--matplotlib`: write a PNG plot instead of the default HTML plot.
-- `--recommended-only`, `--aggressive-only`, `--calm-only`: write only one TXT result.
+- `--recommended-only`, `--aggressive-only`, `--calm-only`: write only one TXT result artifact while still printing normal terminal progress and the final point.
 - `--ignore-safety`: skip safety checks and safety filtering.
 
 ## Search Flow

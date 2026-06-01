@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import contextlib
-import io
 import time
 from pathlib import Path
 
@@ -33,14 +31,7 @@ from .selection import (
 
 
 def main(argv: list[str] | None = None) -> None:
-    config = parse_args(argv)
-    if _point_only_label(config) is None:
-        run(config)
-        return
-
-    with contextlib.redirect_stdout(io.StringIO()):
-        result = run(config)
-    print(Path(result.summary_path).read_text(encoding="utf-8").rstrip())
+    run(parse_args(argv))
 
 
 def run(config: SearchConfig) -> SearchResult:
@@ -175,6 +166,8 @@ def run(config: SearchConfig) -> SearchResult:
             config,
             row,
         )
+        print()
+        print(txt_path.read_text(encoding="utf-8").rstrip())
         diagnostics = [*fixed.diagnostics, *phase1_diags, diag2, diag3, diag4, diag5]
         return SearchResult(
             plot_path=txt_path,

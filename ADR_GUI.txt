@@ -65,19 +65,19 @@ Layer 0 should cover app-level run selection, input selection, and output manage
     false
     User label: Recommended TXT only
     CLI flag: --recommended-only
-    Notes: Prints only the Recommended point and writes one TXT file. Does not write plot HTML/PNG or summary JSON.
+    Notes: Writes one TXT file and prints normal terminal progress plus the final Recommended point. Does not write plot HTML/PNG or summary JSON.
 
 - aggressive_only
     false
     User label: Aggressive TXT only
     CLI flag: --aggressive-only
-    Notes: Prints only the Aggressive point and writes one TXT file. Mutually exclusive with other point-only flags.
+    Notes: Writes one TXT file and prints normal terminal progress plus the final Aggressive point. Mutually exclusive with other point-only flags.
 
 - calm_only
     false
     User label: Calm TXT only
     CLI flag: --calm-only
-    Notes: Prints only the Calm point and writes one TXT file. Mutually exclusive with other point-only flags.
+    Notes: Writes one TXT file and prints normal terminal progress plus the final Calm point. Mutually exclusive with other point-only flags.
 
 Layer 1: Basic settings
 -----------------------

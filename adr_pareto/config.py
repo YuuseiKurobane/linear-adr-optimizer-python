@@ -134,17 +134,17 @@ def build_parser() -> argparse.ArgumentParser:
     point_only.add_argument(
         "--recommended-only",
         action="store_true",
-        help="Print and write only the Recommended point; skip plot/summary artifacts.",
+        help="Write only the Recommended TXT result artifact; terminal progress and final point still print.",
     )
     point_only.add_argument(
         "--aggressive-only",
         action="store_true",
-        help="Print and write only the Aggressive point; skip plot/summary artifacts.",
+        help="Write only the Aggressive TXT result artifact; terminal progress and final point still print.",
     )
     point_only.add_argument(
         "--calm-only",
         action="store_true",
-        help="Print and write only the Calm point; skip plot/summary artifacts.",
+        help="Write only the Calm TXT result artifact; terminal progress and final point still print.",
     )
 
     parser.add_argument("--phase1-eval-weight", type=float, default=2000.0)
