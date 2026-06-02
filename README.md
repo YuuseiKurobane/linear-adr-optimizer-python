@@ -1,14 +1,12 @@
 Original concept by 1DWalker: [srs-simulator on the `fsrs-sa` branch](https://github.com/1DWalker/srs-simulator/tree/fsrs-sa).
 
+Anki add-on: [YuuseiKurobane/linear-adr-ankiaddon](https://github.com/YuuseiKurobane/linear-adr-ankiaddon).
+
 Rust rewrite of this repo: [linear-adr-optimizer](https://github.com/YuuseiKurobane/linear-adr-optimizer).
 
-This repo linear-adr-optimizer-python is still being maintained for testing and easier code readability and easier upgrades in the future.
-
-Anki add-on: TODO: [TODO: INSERT ANKI ADD-ON LINK HERE]
-
-The Anki add-on uses the other faster rust rewrite linear-adr-optimizer
-
 # Linear ADR Optimizer Python
+
+This repo linear-adr-optimizer-python is still being maintained for testing and easier code readability and easier upgrades in the future. The Anki add-on uses the other faster rust rewrite linear-adr-optimizer
 
 This repository is a standalone Python and Rust rewrite of the ADR Pareto search workflow from the FSRS-SA simulator concept. It searches for linear Adaptive Desired Retention parameters for FSRS-style scheduling, compares those candidates against fixed desired-retention baselines, and writes plot/report artifacts for choosing practical ADR settings.
 
