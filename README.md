@@ -1,4 +1,8 @@
 Original concept by 1DWalker: [srs-simulator on the `fsrs-sa` branch](https://github.com/1DWalker/srs-simulator/tree/fsrs-sa).
+Rust rewrite of this repo: [linear-adr-optimizer](https://github.com/YuuseiKurobane/linear-adr-optimizer).
+This repo linear-adr-optimizer-python is still being maintained for testing and easier code readability and easier upgrades in the future.
+Anki add-on: TODO: [TODO: INSERT ANKI ADD-ON LINK HERE]
+The Anki add-on uses the other faster rust rewrite linear-adr-optimizer
 
 # Linear ADR Optimizer Python
 
