@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install stable Rust
         run: |
@@ -79,7 +79,7 @@ jobs:
           Compress-Archive -Path "dist\${{ matrix.binary_name }}" -DestinationPath "..\${{ matrix.archive_name }}" -Force
 
       - name: Upload helper artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.archive_name }}
